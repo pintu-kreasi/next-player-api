@@ -21,7 +21,7 @@ class PlayerGameStatController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(StorePlayerGameStatRequest $request)
     {
         $data = $this->playerGameStatRepositoryInterface->index();
 
@@ -41,22 +41,12 @@ class PlayerGameStatController extends Controller
      */
     public function store(StorePlayerGameStatRequest $request)
     {
-        $details =[
-            'player_id' => $request->player_id,
-            'game_id' => $request->game_id,
-            'two_point' => $request->two_point,
-            'three_point' => $request->three_point,
-            'free_throw' => $request->free_throw,
-            'assist' => $request->assist,
-            'offensive_rebound' => $request->offensive_rebound,
-            'defensive_rebound' => $request->defensive_rebound,
-            'steal' => $request->steal,
-            'block' => $request->block,
-            'turn_over' => $request->turn_over,
-        ];
+        $details = $request->input();
+
+        // return response()->json($details, 401);
         DB::beginTransaction();
         try{
-             $playerGameStat = $this->playerGameStatRepositoryInterface->store($details);
+            $playerGameStat = $this->playerGameStatRepositoryInterface->store($details);
 
              DB::commit();
              return ApiResponseClass::sendResponse(new PlayerGameStatResource($playerGameStat),'Player Game Stat Create Successful',201);
@@ -81,7 +71,7 @@ class PlayerGameStatController extends Controller
      */
     public function edit(PlayerGameStat $playerGameStat)
     {
-        //
+        return response()->json([], 401);
     }
 
     /**
@@ -123,4 +113,12 @@ class PlayerGameStatController extends Controller
 
         return ApiResponseClass::sendResponse('Player Game Stat Delete Successful','',204);
     }
+
+
+    public function custom()
+    {
+        return ApiResponseClass::sendResponse(['test'=>'test'],'Player Create Successful',201);
+
+    }
+
 }

@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class StorePlayerGameStatRequest extends FormRequest
 {
@@ -11,7 +14,7 @@ class StorePlayerGameStatRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -22,7 +25,7 @@ class StorePlayerGameStatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'player_id' => 'required',
+            // 'player_id' => 'required',
         ];
     }
 

@@ -71,8 +71,7 @@ class PlayerSkillStatController extends Controller
      */
     public function show($id)
     {
-        $playerSkillStat = $this->teamRepositoryInterface->getById($id);
-
+        $playerSkillStat = $this->playerSkillStatRepositoryInterface->getById($id);
         return ApiResponseClass::sendResponse(new PlayerSkillStatResource($playerSkillStat),'',200);
     }
 
@@ -89,25 +88,13 @@ class PlayerSkillStatController extends Controller
      */
     public function update(UpdatePlayerSkillStatRequest $request, $id)
     {
-        $updateDetails =[
-            'player_id' => $request->player_id,
-            'dribbling' => $request->dribbling,
-            'passing' => $request->passing,
-            'shooting' => $request->shooting,
-            'defense' => $request->defense,
-            'speed' => $request->speed,
-            'durability' => $request->durability,
-            'power' => $request->power,
-            'cooperative' => $request->cooperative,
-            'dicipline' => $request->dicipline,
-            'effort' => $request->effort,
-        ];
+        $updateDetails = $request->input();
         DB::beginTransaction();
         try{
              $playerSkillStat = $this->playerSkillStatRepositoryInterface->update($updateDetails,$id);
 
              DB::commit();
-             return ApiResponseClass::sendResponse('Team Update Successful','',201);
+             return ApiResponseClass::sendResponse('Player Skill Update Successful','',201);
 
         }catch(\Exception $ex){
             return ApiResponseClass::rollback($ex);

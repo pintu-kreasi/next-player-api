@@ -32,15 +32,13 @@ class PlayerController extends Controller
     public function create()
     {
         //
+        return ApiResponseClass::sendResponse([],'',200);
     }
 
     public function store(StorePlayerRequest $request)
     {
-        $details =[
-            'name' => $request->name,
-            'email' => $request->email,
-            'dob' => $request->dob,
-        ];
+        $details = $request->input();
+        // return ApiResponseClass::sendResponse($details,'Player Create Successful',201);
         DB::beginTransaction();
         try{
              $player = $this->playerRepositoryInterface->store($details);
@@ -57,7 +55,7 @@ class PlayerController extends Controller
     {
         $player = $this->playerRepositoryInterface->getById($id);
 
-        return ApiResponseClass::sendResponse(new PlayerResource($product),'',200);
+        return ApiResponseClass::sendResponse(new PlayerResource($player),'',200);
     }
 
     public function edit(Player $player)
@@ -67,17 +65,14 @@ class PlayerController extends Controller
 
     public function update(UpdatePlayerRequest $request, $id)
     {
-        $updateDetails =[
-            'name' => $request->name,
-            'email' => $request->email,
-            'dob' => $request->dob,
-        ];
+        $updateDetails = $request->input();
         DB::beginTransaction();
         try{
              $player = $this->playerRepositoryInterface->update($updateDetails,$id);
 
              DB::commit();
-             return ApiResponseClass::sendResponse('Player Update Successful','',201);
+             return ApiResponseClass::sendResponse($request->input(),'Player Update Successful',201);
+
 
         }catch(\Exception $ex){
             return ApiResponseClass::rollback($ex);

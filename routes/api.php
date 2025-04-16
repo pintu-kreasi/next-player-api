@@ -20,6 +20,7 @@ Route::get('/user', function (Request $request) {
 Route::post('/register', RegisterController::class)->name('register');
 Route::post('/login', LoginController::class)->name('login');
 Route::post('/logout', LogoutController::class)->name('logout');
+Route::get('/refresh-token', [LoginController::class, 'refreshToken'])->name('refresh-token');
 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -32,7 +33,13 @@ Route::group(['middleware'=>['auth:api']], function(){
     Route::apiResource('/players', PlayerController::class);
     Route::apiResource('/teams', TeamController::class);
     Route::apiResource('/playerSkillStats', PlayerSkillStatController::class);
+    Route::get('/playerGameStats/custom', 'PlayerGameStatController@custom');
     Route::apiResource('/playerGameStats', PlayerGameStatController::class);
-    Route::apiResource('/teamMatch', TeamMatchController::class);
+    // Route::apiResource('/playerGameStats', PlayerGameStatController::class, ['except' => 'index']);
+    // Route::get('playerGameStats/{id}', [
+    //  'as' => 'playerGameStats.index',
+    //  'uses' => 'PlayerGameStatController@index'
+    // ]);
+    Route::apiResource('/teamMatches', TeamMatchController::class);
 
 });

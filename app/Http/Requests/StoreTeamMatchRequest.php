@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class StoreTeamMatchRequest extends FormRequest
 {
@@ -11,7 +14,7 @@ class StoreTeamMatchRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -22,10 +25,10 @@ class StoreTeamMatchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' =>$this->id,
-            'opponent' => $this->opponent,
-            'location' => $this->location,
-            'type' => $this->type,
+            'opponent' => 'required',
+            'location' =>'required',
+            'type' => 'required',
+            'team_id' => 'required',
         ];
     }
 

@@ -16,8 +16,6 @@ class PlayerSkillStatResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'id' =>$this->id,
-            'player_id' => $this->player_id,
             'dribbling' => $this->dribbling,
             'passing' => $this->passing,
             'shooting' => $this->shooting,

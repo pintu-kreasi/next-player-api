@@ -20,6 +20,7 @@ class TeamResource extends JsonResource
             'name' => $this->name,
             'city' => $this->city,
             'coach_id' => $this->coach_id,
+            'total_match' => count($this->matches),
         ];
     }
 }

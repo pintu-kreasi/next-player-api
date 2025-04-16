@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('player_game_stats', function (Blueprint $table) {
             $table->id();
             $table->integer('player_id');
-            $table->integer('game_id');
             $table->tinyInteger('two_point')->default(0);
             $table->tinyInteger('three_point')->default(0);
             $table->tinyInteger('free_throw')->default(0);

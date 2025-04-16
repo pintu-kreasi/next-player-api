@@ -27,6 +27,8 @@ class PlayerGameStatResource extends JsonResource
             'steal' =>$this->steal,
             'block' =>$this->block,
             'turn_over' =>$this->turn_over,
+            'team_id' =>$this->team_id,
+            'match_id' =>$this->match_id,
         ];
     }
 }

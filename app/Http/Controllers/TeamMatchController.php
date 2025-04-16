@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreteamMatchRequest;
+use App\Http\Requests\StoreTeamMatchRequest;
 use App\Http\Requests\UpdateteamMatchRequest;
-use App\Models\teamMatch;
+use App\Models\TeamMatch;
 use App\Interfaces\TeamMatchRepositoryInterface;
 use App\Classes\ApiResponseClass;
 use App\Http\Resources\TeamMatchResource;
@@ -42,18 +42,13 @@ class TeamMatchController extends Controller
      */
     public function store(StoreTeamMatchRequest $request)
     {
-        $details =[
-            'opponent' => $request->name,
-            'location' => $request->location,
-            'type' => $request->type,
-            'city' => $request->city,
-        ];
+        $details = $request->input();
         DB::beginTransaction();
         try{
              $team = $this->teamMatchRepositoryInterface->store($details);
 
              DB::commit();
-             return ApiResponseClass::sendResponse(new TeamResource($team),'Team Match Create Successful',201);
+             return ApiResponseClass::sendResponse(new TeamMatchResource($team),'Team Match Create Successful',201);
 
         }catch(\Exception $ex){
             return ApiResponseClass::rollback($ex);
@@ -87,7 +82,7 @@ class TeamMatchController extends Controller
             'opponent' => $request->name,
             'location' => $request->location,
             'type' => $request->type,
-            'city' => $request->city,
+            'team_id' => $request->team_id,
         ];
         DB::beginTransaction();
         try{

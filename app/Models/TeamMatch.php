@@ -9,4 +9,11 @@ class TeamMatch extends Model
 {
     /** @use HasFactory<\Database\Factories\TeamMatchFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'opponent',
+        'location',
+        'type',
+        'team_id',
+    ];
 }

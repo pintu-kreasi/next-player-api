@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Auth;
 
 
 class StorePlayerRequest extends FormRequest
@@ -14,7 +15,7 @@ class StorePlayerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -27,7 +28,7 @@ class StorePlayerRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required',
-            'dob' => 'required',
+            // 'dob' => 'required',
         ];
     }
 

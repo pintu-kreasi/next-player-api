@@ -47,4 +47,20 @@ class LoginController extends Controller
             'token'   => $token
         ], 200);
     }
+
+    public function refreshToken(Request $request)
+    {
+        $newToken = auth()->refresh();
+        return response()->json([
+            'success' => true,
+            // 'user'    => auth()->guard('api')->user(),
+            'token'   => $newToken,
+            'input' => $request->input('token'),
+            // 'newToken' => auth()->refresh(),
+            'auth' => auth('api')->user()??'kosong',
+            // 'access_token' => $token,
+            // 'token_type'   => 'bearer',
+            //  'expires_in'   => auth()->factory()->getTTL() * 60
+        ], 200);
+    }
 }

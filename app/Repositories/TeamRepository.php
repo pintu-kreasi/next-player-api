@@ -3,12 +3,16 @@
 namespace App\Repositories;
 use App\Models\Team;
 use App\Interfaces\TeamRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 
 class TeamRepository implements TeamRepositoryInterface
 {
+    // public $user = Auth::user();
     public function index(){
-        return Team::all();
+        $user = Auth::user();
+        return Team::where('coach_id', $user->id)->get();
+        // return Team::all();
     }
 
     public function getById($id){

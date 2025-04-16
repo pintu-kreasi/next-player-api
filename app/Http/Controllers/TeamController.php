@@ -47,13 +47,16 @@ class TeamController extends Controller
     public function store(StoreTeamRequest $request)
     {
         // $user = Auth::user();
-        $details =[
-            'name' => $request->name,
-            'address' => $request->address??null,
-            'province' => $request->province??null,
-            'city' => $request->city??null,
-            'coach_id' => $request->user()->id,
-        ];
+        // $details =[
+        //     'name' => $request->name,
+        //     'address' => $request->address??null,
+        //     'province' => $request->province??null,
+        //     'city' => $request->city??null,
+        //     'coach_id' => $request->user()->id,
+        // ];
+        $details = $request->input();
+        $details['coach_id'] = $request->user()->id;
+        
         DB::beginTransaction();
         try{
             $team = $this->teamRepositoryInterface->store($details);
@@ -88,19 +91,14 @@ class TeamController extends Controller
      */
     public function update(UpdateTeamRequest $request, $id)
     {
-        $updateDetails =[
-            'name' => $request->name,
-            'address' => $request->address,
-            'province' => $request->province,
-            'city' => $request->city,
-            'coach_id' => $request->coach_id,
-        ];
+        $updateDetails = $request->input();
+
         DB::beginTransaction();
         try{
-             $player = $this->teamRepositoryInterface->update($updateDetails,$id);
+             $team = $this->teamRepositoryInterface->update($updateDetails,$id);
 
              DB::commit();
-             return ApiResponseClass::sendResponse('Team Update Successful','',201);
+             return ApiResponseClass::sendResponse($request->input(),'Team Update Successful',201);
 
         }catch(\Exception $ex){
             return ApiResponseClass::rollback($ex);

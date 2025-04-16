@@ -13,7 +13,7 @@ class PlayerSkillStatRepository implements PlayerSkillStatRepositoryInterface
     }
 
     public function getById($id){
-       return PlayerSkillStat::findOrFail($id);
+       return PlayerSkillStat::firstOrCreate(['player_id' => $id]);
     }
 
     public function store(array $data){
@@ -21,7 +21,7 @@ class PlayerSkillStatRepository implements PlayerSkillStatRepositoryInterface
     }
 
     public function update(array $data,$id){
-       return PlayerSkillStat::whereId($id)->update($data);
+       return PlayerSkillStat::where(['player_id' => $id])->update($data);
     }
 
     public function delete($id){
