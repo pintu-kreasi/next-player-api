@@ -33,7 +33,7 @@ Route::group(['middleware'=>['auth:api']], function(){
     Route::apiResource('/players', PlayerController::class);
     Route::apiResource('/teams', TeamController::class);
     Route::apiResource('/playerSkillStats', PlayerSkillStatController::class);
-    Route::get('/playerGameStats/custom', 'PlayerGameStatController@custom');
+    // Route::get('/playerGameStats/custom', 'PlayerGameStatController@custom');
     Route::apiResource('/playerGameStats', PlayerGameStatController::class);
     // Route::apiResource('/playerGameStats', PlayerGameStatController::class, ['except' => 'index']);
     // Route::get('playerGameStats/{id}', [

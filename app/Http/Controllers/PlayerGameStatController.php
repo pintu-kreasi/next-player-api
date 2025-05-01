@@ -79,19 +79,7 @@ class PlayerGameStatController extends Controller
      */
     public function update(UpdatePlayerGameStatRequest $request, $id)
     {
-        $updateDetails =[
-            'player_id' => $request->player_id,
-            'game_id' => $request->game_id,
-            'two_point' => $request->two_point,
-            'three_point' => $request->three_point,
-            'free_throw' => $request->free_throw,
-            'assist' => $request->assist,
-            'offensive_rebound' => $request->offensive_rebound,
-            'defensive_rebound' => $request->defensive_rebound,
-            'steal' => $request->steal,
-            'block' => $request->block,
-            'turn_over' => $request->turn_over,
-        ];
+        $updateDetails = $request->input();
         DB::beginTransaction();
         try{
              $playerGameStat = $this->playerGameStatRepositoryInterface->update($updateDetails,$id);

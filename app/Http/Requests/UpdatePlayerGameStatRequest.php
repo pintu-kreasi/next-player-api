@@ -25,7 +25,7 @@ class UpdatePlayerGameStatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'player_id' => 'required',
+            // 'player_id' => 'required',
         ];
     }
 
